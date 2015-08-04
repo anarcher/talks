@@ -1,0 +1,1 @@
+goapp deploy -oauth -application anarcher-talks .
