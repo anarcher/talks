@@ -75,6 +75,12 @@ anarcher@gmail.com
     - loadbalancer
     - ...
 
+* Service
+
+.code gokit/lrucache/endpoint.go /S:SERVICE/,/E:SERVICE/
+
+.code gokit/lrucache/endpoint.go /S:makeEndpoint/,/E:makeEndpoint/
+
 * Example: LRU Cache Endpoint
 
 .play gokit/lrucache/endpoint.go /START1/,/STOP1/
@@ -83,7 +89,6 @@ anarcher@gmail.com
 
 .code gokit/lrucache/endpoint.go /S:MAIN/,/E:MAIN/
 
-.code gokit/lrucache/endpoint.go /S:makeEndpoint/,/E:makeEndpoint/
 
 * Binding 
 

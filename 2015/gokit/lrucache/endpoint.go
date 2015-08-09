@@ -9,13 +9,21 @@ import (
 	"golang.org/x/net/context"
 )
 
+// S:SERVICE OMIT
 type AddRequest struct {
-	A, B int64
+	A int64 `json:"a"`
+	B int64 `json:"b"`
 }
 
 type AddResponse struct {
-	V int64
+	V int64 `json:"v"`
 }
+
+type Add func(context.Context, int64, int64) int64
+
+func add(ctx context.Context, a, b int64) int64 { return a + b }
+
+// E:SERVICE OMIT
 
 // START1 OMIT
 type CacheKeyFunc func(request interface{}) (interface{}, bool)
@@ -55,7 +63,7 @@ func main() {
 	}
 
 	cache, _ := lru.New(10)
-	e := makeEndpoint()
+	e := makeEndpoint(add)
 	e = NewLRUCache(cache, cacheKeyFunc)(e)
 
 	req := AddRequest{1, 2}
@@ -70,10 +78,11 @@ func main() {
 }
 
 // S:makeEndpoint OMIT
-func makeEndpoint() endpoint.Endpoint {
+func makeEndpoint(add Add) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		addReq := request.(AddRequest)
-		addRes := AddResponse{V: addReq.A + addReq.B}
+		v := add(ctx, addReq.A, addReq.B)
+		addRes := AddResponse{V: v}
 		return addRes, nil
 	}
 }
