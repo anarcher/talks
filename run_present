@@ -1,1 +1,1 @@
-./present-osx -orighost="localhost"
+./present-$1 -orighost="localhost"

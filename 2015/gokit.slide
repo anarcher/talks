@@ -18,7 +18,7 @@ anarcher@gmail.com
 .code gokit/hello_netrpc/hello.go /S:HANDLER1/,/E:HANDLER1/
 
 
-* RPC Server 작성하기 
+* 
 
 - 입력받은 a,b를 더하는 비지니스 로직에 대한  RPC(net/rpc) 서버를 만들었다. 
 - 여기서, 실제로 서비스를 하기 위해서 무엇을 더해야 할까?
@@ -79,7 +79,11 @@ anarcher@gmail.com
 
 .play gokit/lrucache/endpoint.go /START1/,/STOP1/
 
-* `context.Context` : 
+* 
+
+.code gokit/lrucache/endpoint.go /S:MAIN/,/E:MAIN/
+
+.code gokit/lrucache/endpoint.go /S:makeEndpoint/,/E:makeEndpoint/
 
 * Binding 
 
