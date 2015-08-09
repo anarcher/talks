@@ -1,0 +1,34 @@
+Gokit
+Gophercon Korea 2015
+
+anarcher
+anarcher@gmail.com
+
+
+* Gokit 소개 
+
+- Gokit에 관심을 가지게 된 이유
+- Gokit의 구조 
+
+* RPC Server 작성하기 
+
+.play gokit/hello_netrpc/hello.go  /START1/,/STOP1/
+
+
+.code gokit/hello_netrpc/hello.go /S:HANDLER1/,/E:HANDLER1/
+
+
+* RPC Server 작성하기 
+
+- 입력받은 a,b를 더하는 비지니스 로직에 대한  RPC(net/rpc) 서버를 만들었다. 
+- 여기서, 실제로 서비스를 하기 위해서 무엇을 더해야 할까?
+
+.image gokit/Finagle+Diagram.png
+
+.caption https://blog.twitter.com/2011/finagle-a-protocol-agnostic-rpc-system
+
+* Go kit : a distributed programming toolkit 
+
+.image gokit/gokit-domains.png
+
+.caption http://www.gophercon.com/talks/go-kit/
