@@ -27,8 +27,60 @@ anarcher@gmail.com
 
 .caption https://blog.twitter.com/2011/finagle-a-protocol-agnostic-rpc-system
 
+* (공통적인?!) 필요한 기능 
+
+여러 서버가 각기 다른 Transport(HTTP/JSON,gRPC,Thirft,Protobuf)을 사용하더라도, 비슷한 기능이 필요하다 
+
+- 운영중인 서버의 상태를 모니터링하고 싶다. 
+
+    - package log
+    - package metric
+    - package tracing
+
+- 다른 서버/서비스에 접속하기 위해,접속 가능한 접속 정보를 알거나 알려주어야 한다. 
+
+    - service discovery
+    - package loadbalancer
+
+- 네트웍 요청에 대한 제한을 주는 등으로 가능한 안정성을 부여하고 싶다. 
+
+    - package ratelimit
+    - package circitbreaker
+
+- 기타 등등 
+
 * Go kit : a distributed programming toolkit 
 
 .image gokit/gokit-domains.png
 
 .caption http://www.gophercon.com/talks/go-kit/
+
+* package endpoint
+
+    // Endpoint is the fundamental building block of servers and clients.
+    // It represents a single RPC method.
+    type Endpoint func(ctx context.Context, request interface{}) (response interface{}, err error)
+
+    // Middleware is a chainable behavior modifier for endpoints.
+    type Middleware func(Endpoint) Endpoint
+
+
+- Endpoint은 하나의 RPC 메소드를 나타낸다 
+- Gokit의 가장 기본적인 인터페이스 
+- Middleware : Endpoint을 받아서 Endpoint을 반환하는 함수로 Endpoint의 기능을 확장한다. 
+
+    - ratelimit
+    - tracing
+    - circitbreaker
+    - loadbalancer
+    - ...
+
+* Example: LRU Cache Endpoint
+
+.play gokit/lrucache/endpoint.go /START1/,/STOP1/
+
+* `context.Context` : 
+
+* Binding 
+
+
