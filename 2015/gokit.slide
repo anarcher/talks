@@ -45,7 +45,7 @@ anarcher@gmail.com
 - 네트웍 요청에 대한 제한을 주는 등으로 가능한 안정성을 부여하고 싶다. 
 
     - package ratelimit
-    - package circitbreaker
+    - package circuitbreaker
 
 - 기타 등등 
 
@@ -71,7 +71,7 @@ anarcher@gmail.com
 
     - ratelimit
     - tracing
-    - circitbreaker
+    - circuitbreaker
     - loadbalancer
     - ...
 
@@ -88,6 +88,21 @@ anarcher@gmail.com
 * 
 
 .code gokit/lrucache/endpoint.go /S:MAIN/,/E:MAIN/
+
+* package ratelimit
+
+.code gokit/token_bucket.go /START/,/STOP/
+
+- github.com/juju/ratelimit
+
+* package circuitbreaker
+
+.code gokit/handy_breaker.go /START/,/STOP/
+
+.image gokit/cb.png
+
+.caption http://martinfowler.com/bliki/CircuitBreaker.html
+
 
 
 * Binding 
