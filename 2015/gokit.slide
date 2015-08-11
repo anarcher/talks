@@ -165,6 +165,11 @@ anarcher@gmail.com
     server = zipkin.AnnotateServer(spanFunc, collector)(server)
     go serveViaHTTP(server)
 
+* Service
+
+.code gokit/addsvc/add.go /S:SERVICE/,/E:SERVICE/
+
+
 
 * Binding 
 
