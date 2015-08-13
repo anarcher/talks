@@ -16,8 +16,11 @@ type AddResponse struct {
 	V int64 `json:"v"`
 }
 
-type Add func(context.Context, int64, int64) int64
+type AddService interface {
+	Add(context.Context int64, int64) int64
+}
 
-func add(_ context.Context, a, b int64) int64 { return a + b }
+type addService struct{}
+func (addService) add(_ context.Context, a, b int64) int64 { return a + b } // HL
 
 // E:SERVICE OMIT

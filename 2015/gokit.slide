@@ -75,11 +75,56 @@ anarcher@gmail.com
     - loadbalancer
     - ...
 
-* Service
+* StringService
 
-.code gokit/lrucache/endpoint.go /S:SERVICE/,/E:SERVICE/
+.code gokit/stringsvc/main.go /S:SERVICE/,/E:SERVICE/
 
-.code gokit/lrucache/endpoint.go /S:makeEndpoint/,/E:makeEndpoint/
+- `StringService` 인터페이스로 비지니스 모델을 정의한다. 
+
+* Request와 Response
+
+.code gokit/stringsvc/main.go /S:RR/,/E:RR/
+
+- `StringService` 의 `RPC` 메소드의 요청( `Request` )와 응답( `Response` )을 `struct` 으로 구성 
+
+* Endpoint
+
+    type Endpoint func(ctx context.Context, request interface{}) (response interface{}, err error)
+
+.code gokit/stringsvc/main.go /S:ENDPOINT/,/E:ENDPOINT/
+
+* Transport
+
+.code gokit/stringsvc/main.go /S:NETRPC_BINDING1/,/E:NETRPC_BINDING1/  
+
+- `Endpoint` 을 `RPC` 라이브러리(net/rpc,grpc,thrift,...)에 필요한 형태로 사용할수 있도록
+- `HTTP` 의 경우, `github.com/go-kit/kit/transport/http` 에 helper struct가 있다 
+
+    uppercaseHandler := httptransport.Server{
+        Context:    ctx,
+        Endpoint:   makeUppercaseEndpoint(svc),
+        DecodeFunc: decodeUppercaseRequest,
+        EncodeFunc: encodeResponse,
+    }
+    countHandler := httptransport.Server{
+        Context:    ctx,
+        Endpoint:   makeCountEndpoint(svc),
+        DecodeFunc: decodeCountRequest,
+        EncodeFunc: encodeResponse,
+    }
+
+*   
+
+.code gokit/stringsvc/main.go /S:NETRPC_BINDING2/,/E:NETRPC_BINDING2/  
+
+*   
+
+.code gokit/stringsvc/main.go /S:NETRPC_BINDING3/,/E:NETRPC_BINDING3/  
+
+
+* Main
+
+.play gokit/stringsvc/main.go /S:MAIN1/,/E:MAIN1/  
 
 * Example: LRU Cache Endpoint
 
@@ -164,11 +209,6 @@ anarcher@gmail.com
     server = makeEndpoint() // for your service
     server = zipkin.AnnotateServer(spanFunc, collector)(server)
     go serveViaHTTP(server)
-
-* Service
-
-.code gokit/addsvc/add.go /S:SERVICE/,/E:SERVICE/
-
 
 
 * Binding 
