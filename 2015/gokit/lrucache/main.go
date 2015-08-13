@@ -67,10 +67,9 @@ func NewLRUCache(cache *lru.Cache, cacheKey CacheKeyFunc) endpoint.Middleware {
 				return val, nil
 			}
 			val, err := next(ctx, request)
-			if err != nil {
-				return val, err
+			if err == nil {
+				cache.Add(key, val)
 			}
-			cache.Add(key, val)
 			fmt.Println("Return from endpoint", request, val)
 			return val, err
 		}

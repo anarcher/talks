@@ -149,12 +149,9 @@ func (n NetRpcBinding) Count(req CountRequest, res *CountResponse) error { // HL
 // E:NETRPC_BINDING3 OMIT
 
 // S:MAIN1 OMIT
-
 func main() {
 	ctx := context.Background()
 	svc := stringService{}
-
-	//net/rpc
 	netRpcBinding := NetRpcBinding{ctx, makeUppercaseEndpoint(svc), makeCountEndpoint(svc)} // HL
 
 	s := rpc.NewServer()
@@ -172,7 +169,6 @@ func main() {
 	req := UppercaseRequest{S: "gokit!"}
 	res, err := clientEndpoint(ctx, req)
 	log.Println("res:", res.(UppercaseResponse).V, "err:", err)
-
 }
 
 // E:MAIN1 OMIT

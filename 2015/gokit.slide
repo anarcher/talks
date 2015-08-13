@@ -14,9 +14,7 @@ anarcher@gmail.com
 
 .play gokit/hello_netrpc/hello.go  /START1/,/STOP1/
 
-
 .code gokit/hello_netrpc/hello.go /S:HANDLER1/,/E:HANDLER1/
-
 
 * 
 

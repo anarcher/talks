@@ -20,7 +20,6 @@ type AddRequest struct {
 type AddResponse struct {
 	V int64
 }
-
 type Handler struct{}
 
 func (h Handler) Add(req AddRequest, res *AddResponse) error {
@@ -31,7 +30,6 @@ func (h Handler) Add(req AddRequest, res *AddResponse) error {
 // E:HANDLER1 OMIT
 
 // START1 OMIT
-
 func main() {
 	var add = new(Handler)
 	s := rpc.NewServer()
