@@ -167,8 +167,8 @@ func main() {
 		}
 	}()
 	time.Sleep(1 * time.Second)
-	client, _ := rpc.DialHTTP("tcp", "localhost:8080")
-	clientEndpoint := NewNetRpcClient(client)
+	client, _ := rpc.DialHTTP("tcp", "localhost:8080") // sorry for ignore the error
+	clientEndpoint := NewNetRpcClient(client)          // HL
 	req := UppercaseRequest{S: "gokit!"}
 	res, err := clientEndpoint(ctx, req)
 	log.Println("res:", res.(UppercaseResponse).V, "err:", err)
@@ -179,22 +179,17 @@ func main() {
 
 // S:CLIENT OMIT
 func NewNetRpcClient(c *rpc.Client) endpoint.Endpoint {
-	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		var (
-			errs      = make(chan error, 1)
-			responses = make(chan interface{}, 1)
-		)
-
+	return func(ctx context.Context, request interface{}) (interface{}, error) { // HL
+		errs := make(chan error, 1)
+		responses := make(chan interface{}, 1)
 		go func() {
 			var response UppercaseResponse
-
 			if err := c.Call("stringsvc.Uppercase", request, &response); err != nil {
 				errs <- err
 				return
 			}
 			responses <- response
 		}()
-
 		select {
 		case <-ctx.Done():
 			return nil, context.DeadlineExceeded
@@ -203,9 +198,7 @@ func NewNetRpcClient(c *rpc.Client) endpoint.Endpoint {
 		case resp := <-responses:
 			return resp, nil
 		}
-
 	}
-
 }
 
 // E:CLIENT OMIT

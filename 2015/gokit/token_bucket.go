@@ -47,3 +47,12 @@ func NewTokenBucketThrottler(tb *ratelimit.Bucket, sleep func(time.Duration)) en
 		}
 	}
 }
+
+func main() {
+	// S:USE OMIT
+
+	e = makeUppercaseEndpoint(svc)
+	e = ratelimit.NewTokenBucketThrottler(jujuratelimit.NewBucketWithRate(1, 1), s)(e)
+
+	// E:USE OMIT
+}

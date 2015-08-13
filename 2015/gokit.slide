@@ -126,13 +126,19 @@ anarcher@gmail.com
 
 .play gokit/stringsvc/main.go /S:MAIN1/,/E:MAIN1/  
 
+* Client
+
+.code gokit/stringsvc/main.go /S:CLIENT/,/E:CLIENT/
+
+- Client도 역시...
+
 * Example: LRU Cache Endpoint
 
-.play gokit/lrucache/endpoint.go /START1/,/STOP1/
+.play gokit/lrucache/main.go /START1/,/STOP1/
 
 * 
 
-.code gokit/lrucache/endpoint.go /S:MAIN/,/E:MAIN/
+.code gokit/lrucache/main.go /S:MAIN/,/E:MAIN/
 
 * package ratelimit
 
@@ -140,13 +146,15 @@ anarcher@gmail.com
 
 - github.com/juju/ratelimit
 
+.code gokit/token_bucket.go /S:USE/,/E:USE/
+
 * package circuitbreaker
 
 .code gokit/handy_breaker.go /START/,/STOP/
 
 * 
 
-.image gokit/cb.png
+.image gokit/cb.png _ 350
 
 .caption http://martinfowler.com/bliki/CircuitBreaker.html
 
@@ -182,10 +190,14 @@ anarcher@gmail.com
     func main() {
         p := dnssrv.NewPublisher("foosvc.internal.domain", 5*time.Second, fooFactory, logger)
         lb := loadbalancer.NewRoundRobin(p)
-        endpoint := loadbalancer.Retry(3, 5*time.Seconds, lb)
+        endpoint := loadbalancer.Retry(3, 5*time.Seconds, lb) 
 
         response, err := endpoint(ctx, request) // requests will be automatically load balanced
     }
+
+- 현재 `dnssrv` 와 `static` 지원 
+- `consul` , `etcd` , `zookeeper` 등 지원 예정 
+
 
 * package tracing
 
@@ -210,7 +222,11 @@ anarcher@gmail.com
     server = zipkin.AnnotateServer(spanFunc, collector)(server)
     go serveViaHTTP(server)
 
+- `Appdash` 은 계획중
 
-* Binding 
+* 
 
+
+.image gokit/zipkin.png 360 _
+.caption https://blog.twitter.com/2012/distributed-systems-tracing-with-zipkin
 
