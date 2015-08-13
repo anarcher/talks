@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/rpc"
 	"strings"
+	"time"
 )
 
 var ErrEmpty = errors.New("empty string")
@@ -159,11 +160,52 @@ func main() {
 	s := rpc.NewServer()
 	s.RegisterName("stringsvc", netRpcBinding) // HL
 	s.HandleHTTP(rpc.DefaultRPCPath, rpc.DefaultDebugPath)
-	err := http.ListenAndServe(":8080", s)
-	if err != nil {
-		log.Fatal(err)
-	}
+	go func() {
+		err := http.ListenAndServe(":8080", s)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+	time.Sleep(1 * time.Second)
+	client, _ := rpc.DialHTTP("tcp", "localhost:8080")
+	clientEndpoint := NewNetRpcClient(client)
+	req := UppercaseRequest{S: "gokit!"}
+	res, err := clientEndpoint(ctx, req)
+	log.Println("res:", res.(UppercaseResponse).V, "err:", err)
 
 }
 
 // E:MAIN1 OMIT
+
+// S:CLIENT OMIT
+func NewNetRpcClient(c *rpc.Client) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		var (
+			errs      = make(chan error, 1)
+			responses = make(chan interface{}, 1)
+		)
+
+		go func() {
+			var response UppercaseResponse
+
+			if err := c.Call("stringsvc.Uppercase", request, &response); err != nil {
+				errs <- err
+				return
+			}
+			responses <- response
+		}()
+
+		select {
+		case <-ctx.Done():
+			return nil, context.DeadlineExceeded
+		case err := <-errs:
+			return nil, err
+		case resp := <-responses:
+			return resp, nil
+		}
+
+	}
+
+}
+
+// E:CLIENT OMIT
