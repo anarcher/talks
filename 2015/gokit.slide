@@ -113,6 +113,28 @@ anarcher@gmail.com
         EncodeFunc: encodeResponse,
     }
 
+* context.Context
+
+- http://blog.golang.org/context
+
+    type Context interface {
+        Done() <-chan struct{}                   // closed when this Context is canceled
+        Err() error                              // why this Context was canceled
+        Deadline() (deadline time.Time, ok bool) // when this Context will be canceled
+        Value(key interface{}) interface{}       // data associated with this Context
+    }
+
+- Context들은 계층구조를 가진다 (상위 Context의 value가 파생된 Context에게 전달된다)
+
+    type CancelFunc
+    type Context
+        func Background() Context
+        func TODO() Context
+        func WithCancel(parent Context) (ctx Context, cancel CancelFunc)
+        func WithDeadline(parent Context, deadline time.Time) (Context, CancelFunc)
+        func WithTimeout(parent Context, timeout time.Duration) (Context, CancelFunc)
+        func WithValue(parent Context, key interface{}, val interface{}) Context
+
 *   
 
 .code gokit/stringsvc/main.go /S:NETRPC_BINDING2/,/E:NETRPC_BINDING2/  
@@ -139,6 +161,37 @@ anarcher@gmail.com
 * 
 
 .code gokit/lrucache/main.go /S:MAIN/,/E:MAIN/
+
+* package logging
+
+.play gokit/stringsvc-log/main.go  /S:NEW_LOG/,/E:NEW_LOG/
+.code gokit/stringsvc-log/main.go  /S:LOG_MW/,/E:LOG_MW/
+
+* package metric
+
+- `counters` , `gauges` , `histograms` 에 대한 공통적인 인터페이스를 제공
+- `expvar` , `statsd` , `prometheus` 에 대한 어댑터 제공
+
+
+    requests := metrics.NewMultiCounter(
+            expvar.NewCounter("requests"),
+            statsd.NewCounter(ioutil.Discard, "requests_total", time.Second),
+            prometheus.NewCounter(stdprometheus.CounterOpts{
+                    Namespace: "addsvc",
+                    Subsystem: "add",
+                    Name:      "requests_total",
+                    Help:      "Total number of received requests.",
+                    }, []string{}),
+    )
+
+    func metric(requests metrics.Counter) endpoint.Middleware {
+        return func(next endpoint.Endpoint) endpoint.Endpoint {
+                return func(ctx context.Context, request interface{}) (interface{}, error) {
+                    requests.Add(1)
+                    return next(ctx,request)
+                }
+        }
+    }
 
 * package ratelimit
 
@@ -229,4 +282,5 @@ anarcher@gmail.com
 
 .image gokit/zipkin.png 360 _
 .caption https://blog.twitter.com/2012/distributed-systems-tracing-with-zipkin
+
 
