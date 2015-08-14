@@ -277,8 +277,26 @@ anarcher@gmail.com
 
 * 
 
-
 .image gokit/zipkin.png 360 _
 .caption https://blog.twitter.com/2012/distributed-systems-tracing-with-zipkin
+
+
+* endpoint.Chain function
+
+.link https://github.com/go-kit/kit/pull/96 github#96
+.link https://github.com/go-kit/kit/pull/95 github#95
+.link https://github.com/justinas/alice  Painless middleware chaining for Go
+
+    mw1 := outer(key,val)
+    mw2 := inter(params)
+    e1 := endpoint.Chain(mw1,mw2)(e1)
+    e2 := endpoint.Chain(mw1,mw2)(e2)
+
+    e := endpoint.Chain(
+       annotate("first"),
+       annotate("second"),
+       annotate("third"),
+    )(myEndpoint)
+
 
 
