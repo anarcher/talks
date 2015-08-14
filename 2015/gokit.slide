@@ -160,7 +160,7 @@ anarcher@gmail.com
 
 .code gokit/lrucache/main.go /S:MAIN/,/E:MAIN/
 
-* package logging
+* package log
 
 .play gokit/stringsvc-log/main.go  /S:NEW_LOG/,/E:NEW_LOG/
 .code gokit/stringsvc-log/main.go  /S:LOG_MW/,/E:LOG_MW/

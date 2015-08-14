@@ -52,7 +52,7 @@ func main() {
 	// S:USE OMIT
 
 	e = makeUppercaseEndpoint(svc)
-	e = ratelimit.NewTokenBucketThrottler(jujuratelimit.NewBucketWithRate(1, 1), s)(e)
+	e = ratelimit.NewTokenBucketLimiter(jujuratelimit.NewBucket(10*time.Second, 1000), s)(e)
 
 	// E:USE OMIT
 }
