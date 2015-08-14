@@ -283,8 +283,8 @@ anarcher@gmail.com
 
 * endpoint.Chain function
 
-.link https://github.com/go-kit/kit/pull/96 github#96
-.link https://github.com/go-kit/kit/pull/95 github#95
+.link https://github.com/go-kit/kit/pull/96 PR#96
+.link https://github.com/go-kit/kit/pull/95 PR#95
 .link https://github.com/justinas/alice  Painless middleware chaining for Go
 
     mw1 := outer(key,val)
