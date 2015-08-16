@@ -9,5 +9,6 @@ ENV GOPATH /go/src/slide/gokit/Godeps/_workspace:$GOPATH
 
 EXPOSE 3999
 
-CMD ["present","-orighost=localhost"]
+ENTRYPOINT ["present"]
+CMD ["-orighost=0.0.0.0"]
 
