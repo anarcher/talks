@@ -1,0 +1,31 @@
+{
+	"ImportPath": "github.com/anarcher/talks/2015/gokit",
+	"GoVersion": "go1.4.2",
+	"Deps": [
+		{
+			"ImportPath": "github.com/go-kit/kit/endpoint",
+			"Rev": "f3d3b4c6b8b2a545089d13a1c8de4818a1e7bd6c"
+		},
+		{
+			"ImportPath": "github.com/go-kit/kit/log",
+			"Rev": "f3d3b4c6b8b2a545089d13a1c8de4818a1e7bd6c"
+		},
+		{
+			"ImportPath": "github.com/hashicorp/golang-lru",
+			"Rev": "7f9ef20a0256f494e24126014135cf893ab71e9e"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "1bc0720082d79ce7ffc6ef6e523d00d46b0dee45"
+		},
+		{
+			"ImportPath": "gopkg.in/logfmt.v0",
+			"Rev": "c50dc9aa845e681529d8e49d3dc11ec0195aacac"
+		},
+		{
+			"ImportPath": "gopkg.in/stack.v1",
+			"Comment": "v1.2",
+			"Rev": "78faece3fa1ceb2cdcdc56f0643f6faa9cfb974c"
+		}
+	]
+}

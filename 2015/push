@@ -1,0 +1,1 @@
+docker push anarcher/talks:2015-$1

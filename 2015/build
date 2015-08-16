@@ -1,2 +1,1 @@
-docker build -t anarcher/talks:2015-gokit . 
-docker push anarcher/talks:2015-gokit
+docker build -t anarcher/talks:2015-$1 -f $1.Dockerfile . 
