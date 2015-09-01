@@ -1,6 +1,8 @@
 docker-machine create -d virtualbox --virtualbox-boot2docker-url=https://github.com/anarcher/boot2docker-experimental/releases/download/1.9/boot2docker-1.9.iso infra
 
 docker $(docker-machine config infra) run -d \
+    --name=consul \
+    --restart=always \
     -p "8500:8500" \
     -h "consul" \
     progrium/consul -server -bootstrap
@@ -25,6 +27,5 @@ docker service attach $cid demo1.dev
 
 
 ping demo0
-
 ping demo1.dev
 
