@@ -11,6 +11,11 @@ anarcher@gmail.com
 
 * Demo
 
+- 아직은 실험적인 빌드(Experimental build) 에서만 사용가능
+- docker engine 1.7 / dockercon 2015 에서 발표됨.
+- docker engine 1.9에서는?
+
+
 * Docker container linking
 
 .image docker-network/my-small-idea.png
@@ -69,8 +74,8 @@ anarcher@gmail.com
 - VXLAN(Virtual eXtensible Local Area Network) 사용 
     - Linux (3.7)지원 
     - L3 Networks상에서 (논리적인) L2 Network을 구성 
-- 다른 네트웍 노드(docker engine)을 찾기 위해 serf(http://serfdom.io)을 사용 
-    - overlay:multihost을 사용하면 vxlan의 multicast으로 ARP 전달 [[?]]
+    - IP/UDP를 이용해서 encapsulation 하는 구조 
+- 다른 네트웍 노드(docker engine)을 찾기 위해 serf([[http://serfdom.io]])을 사용 
 - Linux netns(network namespace) 사용 
     - namespace 마다 독자적인 network 환경을 가질수 있다 
     - /var/run/docker/netns/
