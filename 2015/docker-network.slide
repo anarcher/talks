@@ -4,6 +4,11 @@ OpenContainer Korea 2015
 anarcher
 anarcher@gmail.com
 
+
+* Multi-Host networking with docker 
+
+.image docker-network/docker-turtles-communication.jpg
+
 * Demo
 
 * Docker network & service UI
@@ -74,7 +79,22 @@ anarcher@gmail.com
 
 * docker/libnetwork
 
+- Docker engine에서 network 부분을 분리 (docker engine도 libnetwork의 사용자 중..)
+- CNM(Container Network Model)에 대한 구현 
+- Docker engine에서 사용하는 host,bridge에 대한 구현도 이제는 docker/libnetwork에서
+- Driver based networking  (builtin driver도 있고,remote driver도 사용할수 있다)
+
+.image docker-network/docker-libnetwork.png _ 800
+
 * CNM : Container Network Model 
+
+.image docker-network/cnm-model.jpg
+
+- Sandbox : An isolated environment
+- Endpoint : An addressable endpoint used for communication over a specific network.
+- Network :  A collection of endpoints that are able to communicate to each other.  
+
+
 
 * Remote network driver plugin
 
