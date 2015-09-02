@@ -16,16 +16,65 @@ anarcher@gmail.com
 
 .code docker-network/network-ui.sh
 
+네트웍을 만들거나,삭제하거나,조회할수 있다 
+
+    docker network create -d <plugin_name> foo
+
+    $ docker network create foo
+    aae601f43744bc1f57c515a16c8c7c4989a2cad577978a32e6910b799a6bccf6
+    $ docker network create -d overlay bar
+    d9989793e2f5fe400a58ef77f706d03f668219688ee989ea68ea78b990fa2406
+
 * Docker service
 
 .code docker-network/service-ui.sh
 
+`docker run` 할때 `--publish-service` 옵션을 사용하거나,
+
+    docker run -itd --publish-service db.foo postgres
+
+`docker service publish` 와 `docker service attach` 으로 container와 service(endpoint)을 연결 할수 있다
+
+    $ docker service publish my-service.foo
+    ec56fd74717d00f968c26675c9a77707e49ae64b8e54832ebf78888eb116e428
+    $ docker service attach a0ebc12d3e48 my-service.foo
+
+
 * Docker daemon & libkv 
+
+- docker-machine create
+
+    docker-machine --debug create \
+        -d virtualbox \
+        --virtualbox-boot2docker-url=https://github.com/anarcher/boot2docker-experimental/releases/download/1.9/boot2docker-1.9.iso \
+        --engine-opt="kv-store=consul:$(docker-machine ip infra):8500" \
+        --engine-label="com.docker.network.driver.overlay.bind_interface=eth1" \
+        --engine-label="com.docker.network.driver.overlay.neighbor_ip=$(docker-machine ip demo0)" demo1
+
+- docker daemon 
+
+    docker daemon 
+        --kv-store=consul:consul-host:8500 \ 
+        --label=com.docker.network.driver.overlay.bind_interface=eth1 \
+        --label=com.docker.network.driver.overlay.neighbor_ip=10.254.101.21
+
+- cluster membership 을 위해서 serf(http://serfdom.io)을 사용 
+- docker network,docker service의 metadata을 저장하기 위해서 docker/libkv(--kv-store)를 사용 
+ 
+* Overlay network driver
+
+- VXLAN(Virtual eXtensible Local Area Network) 사용 
+    - Linux (3.7)지원 
+    - L3 Networks상에서 (논리적인) L2 Network을 구성 
+- 다른 네트웍 노드(docker engine)을 찾기 위해 serf(http://serfdom.io)을 사용 
+    - overlay:multihost을 사용하면 vxlan의 multicast으로 ARP 전달 [[?]]
+- Linux netns(network namespace) 사용 
+    - namespace 마다 독자적인 network 환경을 가질수 있다 
+    - /var/run/docker/netns/
+
+* docker/libnetwork
 
 * CNM : Container Network Model 
 
-* libnetwork: Drivers
-
-* Overlay network driver
-
 * Remote network driver plugin
+
