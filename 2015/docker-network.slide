@@ -1,9 +1,9 @@
 Multi-Host networking with Docker
 OpenContainer Korea 2015
+5 Sep 2015
 
 anarcher
 anarcher@gmail.com
-
 
 * Multi-Host networking with docker 
 
@@ -11,13 +11,11 @@ anarcher@gmail.com
 
 * Demo
 
-* Docker network & service UI
-
 * Docker container linking
 
 .image docker-network/my-small-idea.png
 
-* Docker network 
+* Docker network UI
 
 .code docker-network/network-ui.sh
 
@@ -30,11 +28,11 @@ anarcher@gmail.com
     $ docker network create -d overlay bar
     d9989793e2f5fe400a58ef77f706d03f668219688ee989ea68ea78b990fa2406
 
-* Docker service
+* Docker service UI
 
 .code docker-network/service-ui.sh
 
-`docker run` 할때 `--publish-service` 옵션을 사용하거나,
+`docker run`  할때 `--publish-service` 옵션을 사용하거나,
 
     docker run -itd --publish-service db.foo postgres
 
@@ -63,7 +61,7 @@ anarcher@gmail.com
         --label=com.docker.network.driver.overlay.bind_interface=eth1 \
         --label=com.docker.network.driver.overlay.neighbor_ip=10.254.101.21
 
-- cluster membership 을 위해서 serf(http://serfdom.io)을 사용 
+- cluster membership 을 위해서 serf([[http://serfdom.io]])을 사용 
 - docker network,docker service의 metadata을 저장하기 위해서 docker/libkv(--kv-store)를 사용 
  
 * Overlay network driver
@@ -88,13 +86,28 @@ anarcher@gmail.com
 
 * CNM : Container Network Model 
 
-.image docker-network/cnm-model.jpg
+.image docker-network/cnm-model.jpg _ 600
 
-- Sandbox : An isolated environment
-- Endpoint : An addressable endpoint used for communication over a specific network.
-- Network :  A collection of endpoints that are able to communicate to each other.  
-
-
+- Sandbox : 컨테이너를 위한 격리된 네트웍 환경 
+    - IP,MAC,Route,DNS ; Linux netns,FreeBSD Jail
+- Endpoint : 특정 네트워크에서 통신하는 네트웍 인터페이스. 
+    - 컨테이너의 생성과 소멸과는 독립적으로 분리되어 Endpoint만의 생성과 소멸을 가진다 
+- Network : 서로 통신할수 있는 여러 Endpoints의 그룹 
+    - 하나의 endpoint는 하나의 netowork에만 속할수 있다. 
 
 * Remote network driver plugin
+
+- Plugin discovery
+    - /etc/docker/plugin/[name].spec|.sock|.json
+    
+- API
+    - /Plugin.Activate
+    - /NetworkDriver.CreateNetwork
+    - /NetworkDriver.DeleteNetwork
+    - /NetworkDriver.CreateEndpoint
+    - /NetworkDriver.EndpointOperInfo
+    - /NetworkDriver.DeleteEndpoint
+    - /NetworkDriver.Join
+    - /NetworkDriver.Leave
+
 
