@@ -98,9 +98,11 @@ anarcher@gmail.com
 - Endpoint : 특정 네트워크에서 통신하는 네트웍 인터페이스. 
     - 컨테이너의 생성과 소멸과는 독립적으로 분리되어 Endpoint만의 생성과 소멸을 가진다 
 - Network : 서로 통신할수 있는 여러 Endpoints의 그룹 
-    - 하나의 endpoint는 하나의 netowork에만 속할수 있다. 
+    - 하나의 endpoint는 하나의 network에만 속할수 있다. 
 
 * Remote network driver plugin
+
+- JSON/RPC/HTTP
 
 - Plugin discovery
     - /etc/docker/plugin/[name].spec|.sock|.json
