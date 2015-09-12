@@ -11,15 +11,16 @@ anarcher@gmail.com
 
 * Demo
 
-- 아직은 실험적인 빌드(Experimental build) 에서만 사용가능
-- docker engine 1.7 / dockercon 2015 에서 발표됨.
-- docker engine 1.9에서는?
+- It's only available with the experimental build of docker
+- It was unveiled with docker engine 1.7 in dockercon 2015
+- Release with docker engine 1.9 release?
 
 * Docker network UI
 
 .code docker-network/network-ui.sh
 
-네트웍을 만들거나,삭제하거나,조회할수 있다 
+Create networks,removing or listing
+
 
     docker network create -d <plugin_name> foo
 
@@ -32,11 +33,11 @@ anarcher@gmail.com
 
 .code docker-network/service-ui.sh
 
-`docker run`  할때 `--publish-service` 옵션을 사용하거나,
+When `docker run`, Can use `--publish-service` option 
 
     docker run -itd --publish-service db.foo postgres
 
-`docker service publish` 와 `docker service attach` 으로 container와 service(endpoint)을 연결 할수 있다
+Or can use `docker service publish` and `docker service attach` for linking a container with a service.
 
     $ docker service publish my-service.foo
     ec56fd74717d00f968c26675c9a77707e49ae64b8e54832ebf78888eb116e428
@@ -61,39 +62,43 @@ anarcher@gmail.com
         --label=com.docker.network.driver.overlay.bind_interface=eth1 \
         --label=com.docker.network.driver.overlay.neighbor_ip=10.254.101.21
 
-- cluster membership 을 위해서 serf([[http://serfdom.io]])을 사용 
-- docker network,docker service의 metadata을 저장하기 위해서 docker/libkv(--kv-store)를 사용 
+- Serf([[http://serfdom.io]]) is used to cluster membership
+
+- docker/libkv(--kv-store) is used to the metadata for docker network,docker service
  
 * Overlay network driver
 
-- VXLAN(Virtual eXtensible Local Area Network) 사용 
-    - Linux (3.7)지원 
-    - L3 Networks상에서 (논리적인) L2 Network을 구성 
-    - IP/UDP를 이용해서 encapsulation 하는 구조 
-- 다른 네트웍 노드(docker engine)을 찾기 위해 serf([[http://serfdom.io]])을 사용 
-- Linux netns(network namespace) 사용 
-    - namespace 마다 독자적인 network 환경을 가질수 있다 
+- Uses VXLAN(Virtual eXtensible Local Area Network) 
+
+    - Support from Linux(3.7) 
+    - Configure (Logical) L2 Network on L3 Networks
+    - Packet encapsulation via IP/UDP
+
+- Uses serf([[http://serfdom.io]]) for searching other network node(docker engine)
+
+- Uses Linux netns(network namespace) 
+    - Each namespaces are possible to have an indepenent network environment
     - /var/run/docker/netns/
 
 * docker/libnetwork
 
-- Docker engine에서 network 부분을 분리 (docker engine도 libnetwork의 사용자 중..)
-- CNM(Container Network Model)에 대한 구현 
-- Docker engine에서 사용하는 host,bridge에 대한 구현도 이제는 docker/libnetwork에서
-- Driver based networking  (builtin driver도 있고,remote driver도 사용할수 있다)
+- Separates the network part from Docker engine (Docker engine is also one of libnetwork users too)
+- An Implementation of CMD(Container Network Model) 
+- docker/libnetwork has also  implementations absout host,bridge which are docker engine's default network features)
+- Driver based networking (These are two type drivers. builtin driver and remote drvier)
 
-.image docker-network/docker-libnetwork.png _ 800
+.image docker-network/docker-libnetwork.png _ 600 
 
 * CNM : Container Network Model 
 
 .image docker-network/cnm-model.jpg _ 600
 
-- Sandbox : 컨테이너를 위한 격리된 네트웍 환경 
+- Sandbox : Isolation environment for containers' networks
     - IP,MAC,Route,DNS ; Linux netns,FreeBSD Jail
-- Endpoint : 특정 네트워크에서 통신하는 네트웍 인터페이스. 
-    - 컨테이너의 생성과 소멸과는 독립적으로 분리되어 Endpoint만의 생성과 소멸을 가진다 
-- Network : 서로 통신할수 있는 여러 Endpoints의 그룹 
-    - 하나의 endpoint는 하나의 network에만 속할수 있다. 
+- Endpoint : A network interface to communicate in a specific network
+    - The endpoint’s lifetime is completely separate from the container’s lifetime
+- Network : A network is a collection of endpoints that are allowed to communicate with each other. 
+    - An Endpoint can belong to only one network
 
 * Remote network driver plugin
 
@@ -111,5 +116,4 @@ anarcher@gmail.com
     - /NetworkDriver.DeleteEndpoint
     - /NetworkDriver.Join
     - /NetworkDriver.Leave
-
 
