@@ -1,0 +1,51 @@
+Using docker volume
+OpenContainer Korea 2016
+26 Mar 2016
+
+anarcher
+anarcher@gmail.com
+
+* Docker volume command
+
+.code docker-volume/docker-volume.sh
+
+- docker volume을 관리할수 있는 interface가 추가되었음 (docker 1.9)
+
+* Using docker 1.9 volume command
+
+.code docker-volume/docker-volume-1.sh
+
+* Using docker volume
+
+.code docker-volume/docker-volume-2.sh
+
+* Deployment with docker volume
+
+.code docker-volume/docker-volume-3.sh
+
+- docker-compose version 2 에서 docker volume interface을 제공한다 
+
+* Volume plugin driver
+
+    $docker run -ti -v volumename:/data --volume-driver=flocker   busybox sh
+
+    $docker volume create -h 
+
+    Usage:  docker volume create [OPTIONS]
+
+    Create a volume
+
+    -d, --driver=local    Specify volume driver name
+    --help                Print usage
+    --name                Specify volume name
+    -o, --opt=map[]       Set driver specific options
+
+
+* Volume plugins
+
+- https://docs.docker.com/engine/extend/plugins/
+
+- Rexray  : https://github.com/emccode/rexray
+- Convey  : https://github.com/rancher/convoy
+- Flocker : https://github.com/ClusterHQ/flocker
+
