@@ -1,0 +1,43 @@
+digraph G{
+    subgraph clusterGeneralNode {
+        label="Node";
+        "gmond(local)";
+        NodeExporter1[label="Node Exporter"];
+    }
+    subgraph clusterDocker {
+        label="Docker";
+        cadvisor;
+    }
+    subgraph clusterGangliaNode {
+        label="Ganglia";
+        "gmond(local)" -> gmond;
+        NodeExporter2[label="Node Exporter"];
+        NodeExporter2 -> "gmond"[label="gmond plugin"];
+    }
+    subgraph clusterProm {
+        label="Prometheus";
+        AlertManager;
+        ServiceDiscovey;
+        Prometheus;
+        Prometheus -> {NodeExporter1,NodeExporter2};
+        Prometheus -> cadvisor;
+        AlertManager -> Prometheus;
+        ServiceDiscovey -> Prometheus[label="targets"];
+    }
+
+    subgraph clusterPrism {
+        label="Prism";
+        Prometheus -> "Ingest"[label="remote_write"];
+        "Ingest" -> "Storage";
+        "Query" -> "Storage";
+        "Storage" -> { "S3","DynamoDB"};
+    }
+
+    Grafana -> "Query";
+    Grafana -> Prometheus;
+
+    AlertManager -> { Email,Slack }[label="notification"];
+    AWSAPI -> ServiceDiscovey;
+    GCPAPI -> ServiceDiscovey;
+}
+
