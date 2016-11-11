@@ -81,6 +81,20 @@ border: 2px dotted black;
 content: "Exercise";
 margin-left: 1.8em;
 }
+
+.console {
+background-color: #eee;
+background-image: url("keyboard.png");
+background-size: 1.4em;
+background-repeat: no-repeat;
+background-position: 0.2em 0.2em;
+border: 2px dotted black;
+}
+.console::before {
+content: "Console";
+margin-left: 1.8em;
+}
+
 li p { line-height: 1.25em; }
 .inverse {
     background: #272822;
