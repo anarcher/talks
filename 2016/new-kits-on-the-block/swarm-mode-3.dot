@@ -1,0 +1,13 @@
+graph G {
+	node [shape=box,style=filled];
+	edge [len=1.5];   /* applies to all following edges */
+	{node [fillcolor=skyblue] Engine }
+	Engine2[label="Engine"];
+	Engine3[label="Engine"];
+	Engine4[label="Engine"];
+	Engine5[label="Engine"];
+	Engine -- Engine2;
+	Engine -- Engine3;
+    Engine -- Engine4;
+    Engine -- Engine5;
+}

@@ -41,9 +41,16 @@ class: title
 
 ---
 
-layout: true
+# Swarm architecture
 
-# Swarm mode 
+![Swarm architecture](swarm-arch.png)
+
+
+---
+
+# Swarm mode
+
+- Manager mode
 
 .console[
   ```bash
@@ -51,19 +58,8 @@ layout: true
   ```
 ]
 
----
 
-<div class="center">
-    <p>
-    <img src="swarm-mode-1.dot.png" />
-    </p>
-</div>
-
----
-
-layout: true
-
-# Swarm mode 
+- Worker node
 
 .console[
   ```bash
@@ -73,33 +69,6 @@ layout: true
 ]
 
 ---
-
-<div class="center">
-    <p>
-    <img src="swarm-mode-2.dot.png" />
-    </p>
-</div>
-
----
-<div class="center">
-    <p>
-    <img src="swarm-mode-3.dot.png" />
-    </p>
-</div>
-
-
----
-
-layout: false
-
-# Swarm architecture
-
-![Swarm architecture](swarm-arch.png)
-
-
----
-
-layout: false
 
 # Demo
 

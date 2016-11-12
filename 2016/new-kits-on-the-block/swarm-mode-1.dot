@@ -1,0 +1,6 @@
+graph G {
+	node [shape=box,style=filled];
+	edge [len=3];   /* applies to all following edges */
+	{node [fillcolor=skyblue] Engine }
+	Engine;
+}
