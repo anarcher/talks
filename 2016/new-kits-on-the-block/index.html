@@ -184,6 +184,77 @@ $docker node update --label-add security=high $NODE_ID_OR_NAME
 
 ---
 
+# Routing mesh : Publishing ports
+
+.console[
+```bash
+$docker service create --name my-web \
+                        --publish 8080:80 \
+                        --replicas 2 \
+                        nginx
+
+$docker network ls
+NETWORK ID          NAME                   DRIVER              SCOPE
+e73a26ef806e        bridge                 bridge              local
+62e5259bafc4        docker_gwbridge        bridge              local
+1e101ab8b2da        host                   host                local
+68lukwj0iddg        ingress                overlay             swarm
+```
+]
+
+---
+
+# Routing mesh : Publishing ports
+
+![](routing-mesh-1.png)
+
+---
+
+# Routing mesh : Publishing ports
+
+![](routing-mesh-2.png)
+
+---
+
+# Swarm mode service discovery
+
+
+.console[
+```bash
+$ docker service inspect \
+  --format='{{json .Endpoint.VirtualIPs}}' \
+    my-web
+
+[{"NetworkID":"7m2rjx0a97n88wzr4nu8772r3" "Addr":"10.0.0.2/24"}]
+
+```
+]
+
+- `--endpoint-mode vip` 이면, 서비스(Service)의 Virtual IP을 생성됨 (default)
+- VIP는 서비스 이름으로 DNS에 추가됨
+- 가쉽 프로토콜(Gossip protocol)기반으로 스윔(Swarm)안의 컨테이너(Container)가 VIP,DNS 정보를 공유 
+- `HEALTHCHECK --interbal=3s --timeout=1s CMD curl -f http://localhost:5000/ || exit 1` 
+- DNSRR(DNS Roundrobin)도 지원 `--endpoint-mode dnsrr`
+
+---
+
+# Next
+
+- Cluster volume plugin : NFS,Flocker,infinit...
+
+- Pluggable scheduler : https://github.com/docker/swarmkit/issues/1412 (What components of Swarmkit (swarm 1.12) are pluggable?)
+
+- `--network host`  : https://github.com/docker/swarmkit/issues/989 (Do we want to allow services to use the host's network namespace?)
+
+- Scheduler Rebalancing : https://github.com/docker/swarmkit/issues/310
+
+- Elastic autoscaling : https://github.com/docker/swarmkit/issues/1663
+
+
+
+---
+
+layout: false
 class: title,inverse
 
 # Infrakit
