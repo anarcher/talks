@@ -102,7 +102,7 @@ li p { line-height: 1.25em; }
     text-shadow: 0 0 20px #333;
 }
 .inverse p {
-    font-family: 'Droid Serif', 'Noto Sans KR'; 
+    font-family: 'Yanone Kaffeesatz';
     color: #f3f3f3;
 }
 .inverse h1, .inverse h2 {
