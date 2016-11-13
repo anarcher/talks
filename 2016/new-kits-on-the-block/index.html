@@ -259,6 +259,94 @@ class: title,inverse
 
 # Infrakit
 
+---
+
+class: inverse
+
+# Infrakit 
+
+- 인프라스트라쳐 오케스트레이션 (Infrastructure orchestration) 툴킷
+
+- Plugin API 구조 
+
+- Terraform이나 ansible 처럼 구성관리(Configuration management) 도구는 아님 (플러그인으로 사용가능)
+
+- 선언적인 상태(Declarative state)
+
+
+---
+
+
+class: inverse
+
+# Plugins
+
+- 인스턴스 `instance` : 리소스(Resource) (예: EC2 instance)
+
+- 그룹 `group` : 리소스 그룹 (예: AutoScalingGroup , Instance Group)
+
+- 플레이버 `flavor` : 인스턴스의 변화 (예: Swarm join)
+
+
+---
+
+
+class: inverse
+
+# Plugins
+
+- Group : watch , unwatch , destroy , update
+
+- Instance : provision , destory
+
+- Flavor : perpare , health , drain
+
+
+---
+
+
+class: inverse
+
+# Configuration
+
+```json
+{
+    "ID" : "nginx",
+    "Properties" : {
+        "Allocation" : { 
+            "Size" : 3
+        },
+        "Instance" : {
+            "Plugin" : "instance-vagrant",
+            "Properties" : {
+                "Box" : "ubuntu-docker"
+            }
+        },
+        "Flavor" : {
+            "Plugin" : "flavor-vanilla",
+            "Properties" : {
+                "Init" : "docker run -d -p 80:80 nginx"
+            }
+        }
+    }
+}
+
+```
+
+---
+
+# Infrakit architecture
+
+![](./infrakit-arch.png)
+
+---
+
+class: title, inverse
+
+감사합니다!
+
+<pre> mailto: anarcher@gmail.com </pre>
+
 
     </textarea>
     <script src="remark-0.14.min.js" type="text/javascript">
