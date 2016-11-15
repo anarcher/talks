@@ -216,8 +216,7 @@ e73a26ef806e        bridge                 bridge              local
 
 ---
 
-# Swarm mode service discovery
-
+# VIP & DNSRR
 
 .console[
 ```bash
@@ -235,6 +234,30 @@ $ docker service inspect \
 - 가쉽 프로토콜(Gossip protocol)기반으로 스윔(Swarm)안의 컨테이너(Container)가 VIP,DNS 정보를 공유 
 - `HEALTHCHECK --interbal=3s --timeout=1s CMD curl -f http://localhost:5000/ || exit 1` 
 - DNSRR(DNS Roundrobin)도 지원 `--endpoint-mode dnsrr`
+
+---
+
+# DNSRR & DNS based Service discovery
+
+- http://prometheus.io dns_sd_configs
+
+```yaml
+
+- job_name: 'cadvisor'
+  dns_sd_configs:
+  - names:
+      - 'tasks.cadvisor'
+      type: 'A'
+      port: 8080
+
+- job_name: 'node-exporter'
+  dns_sd_configs:
+  - names:
+      - 'tasks.node-exporter'
+      type: 'A'
+      port: 9100
+
+```
 
 ---
 
