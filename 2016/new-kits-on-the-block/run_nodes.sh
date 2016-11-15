@@ -4,5 +4,6 @@ NUM_WORKERS=3
 for i in $(seq "${NUM_WORKERS}"); do 
 	docker run -d --privileged --name worker-${i} \
             --hostname=worker-${i} -p ${i}2375:2375 docker:1.12.3-dind
+    sleep 2 
     docker --host localhost:${i}2375 swarm join --token ${SWARM_TOKEN} ${SWARM_MASTER}:2377
 done
