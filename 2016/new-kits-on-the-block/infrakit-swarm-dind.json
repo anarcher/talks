@@ -1,0 +1,22 @@
+{
+  "ID": "swarm-dind",
+  "Properties": {
+    "Allocation": {
+      "Size": 1 
+    },
+    "Instance": {
+      "Plugin": "instance-dind",
+      "Properties": {
+		 "Name": "worker",
+		 "HostName" : "worker"
+      }
+    },
+    "Flavor": {
+      "Plugin": "flavor-swarm",
+      "Properties": {
+		"Type" : "worker",
+        "DockerRestartCommand" : " "
+      }
+    }
+  }
+}
