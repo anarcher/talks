@@ -1,0 +1,6 @@
+digraph structs {
+
+node [shape=record];
+a [label="{Group Plugin|Instance Plugin|Flavor Plugin}|{Default|AWS EC2|Swarm}|{Autoscaling|Terraform|Redis}|{Default|Vagrant|Swarm}"];    
+
+}

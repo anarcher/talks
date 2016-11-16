@@ -274,33 +274,50 @@ class: title,inverse
 
 - 선언적인 상태(Declarative state)
 
+- Continuous monitoring and reconciliation(crontab?)
 
 ---
 
 # Plugins
 
-- 인스턴스 `instance` : 리소스(Resource) (예: EC2 instance)
+- 인스턴스(Instance) : 리소스(Resource) (예: EC2 instance)
+    - `provision`, `destory`
 
-- 그룹 `group` : 리소스 그룹 (예: AutoScalingGroup , Instance Group)
+- 그룹(Group) : 리소스 그룹 (예: AutoScalingGroup , Instance Group)
+    - `commit`, `free` , `destory`, `update`
 
-- 플레이버 `flavor` : 인스턴스의 변화 (예: Swarm join)
+- 플레이버(Flavor) : 인스턴스의 변화 (예: Swarm join)
+    - `preapre`, `health`, `drain`
 
 
 ---
 
-# Plugins
+# Plugins Example
 
-- Group : watch , unwatch , destroy , update
+<div class="center">
+    <p style="width:80%;">
+    <img src="infrakit-plugins.dot.png" width="80%" />
+    </p>
+</div>
 
-- Instance : provision , destory
-
-- Flavor : perpare , health , drain
 
 
 ---
 
 
 # Configuration
+
+```json
+{
+    "Plugin": "",
+    "Properties: {...}
+}
+
+```
+
+---
+
+# Configuration - Nginx Group
 
 ```json
 {
@@ -325,8 +342,6 @@ class: title,inverse
 }
 
 ```
-
----
 
 # Infrakit architecture
 
