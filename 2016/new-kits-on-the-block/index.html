@@ -103,7 +103,7 @@ layout: false
 
 # Demo
 
-- dind (docker in docker)을 사용해서 worker nodes을 만듬
+- dind (docker in docker)를 사용해서 워커 노드(worker nodes)을 만듬
 
 .console[
   ```bash
@@ -167,12 +167,12 @@ layout: false
 
 .console[
 
-- 라벨을 가지고 서비스가 실행될 노드 선택에 제한을 줄수 있다
+- 라벨을 가지고 서비스가 실행될 노드 선택에 제한을 줄 수 있다
 ```bash
 $docker service create --constraint="node.labels.security == high" ...
 ```
 
-- 노드(Node) 라벨은 다음과 같이 관리할수 있다 
+- 노드(Node) 라벨은 다음과 같이 관리할 수 있다 
 ```bash
 $docker node update --label-add security=high $NODE_ID_OR_NAME
 ```
