@@ -237,6 +237,30 @@ $ docker service inspect \
 
 ---
 
+# DNSRR & DNS based Service discovery
+
+- http://prometheus.io dns_sd_configs
+
+```yaml
+
+- job_name: 'cadvisor'
+  dns_sd_configs:
+  - names:
+      - 'tasks.cadvisor'
+      type: 'A'
+      port: 8080
+
+- job_name: 'node-exporter'
+  dns_sd_configs:
+  - names:
+      - 'tasks.node-exporter'
+      type: 'A'
+      port: 9100
+
+```
+
+---
+
 # Next
 
 - Cluster volume plugin : NFS,Flocker,infinit...
