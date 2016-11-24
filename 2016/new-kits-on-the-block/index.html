@@ -183,6 +183,18 @@ $docker node update --label-add security=high $NODE_ID_OR_NAME
 
 ---
 
+# Load balancing
+
+
+- 외부 로드 밸런싱(External Load Balancing) (Routing Mesh)
+
+- 내부 로드 밸런싱(Internal Load Balancing) (Virtual IP)
+
+- `ip_vs`, `iptables`
+
+
+---
+
 # Routing mesh : Publishing ports
 
 .console[
@@ -203,6 +215,7 @@ e73a26ef806e        bridge                 bridge              local
 
 ---
 
+
 # Routing mesh : Publishing ports
 
 ![](routing-mesh-1.png)
@@ -215,7 +228,7 @@ e73a26ef806e        bridge                 bridge              local
 
 ---
 
-# Swarm mode service discovery
+# Virtual IP 
 
 
 .console[
