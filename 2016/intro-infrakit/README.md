@@ -43,7 +43,7 @@
 - __instance__ : a resource (e.g. EC2 Instance)
 - __group__ : a collection of 'like' resources (e.g. ASG)
 - __flavor__ : modification to an instance (e.g. swarm join)
-
+- manager : leadership detection , state storage for groups
 
 ### Plugin responsibilities
 
@@ -206,6 +206,22 @@ Available Commands:
 $./infrakit group commit ./hello-dind.json
 ```
 
+## RPC Processing flow
+
+- Group : ```CommitGroup(grp Spec, pretend bool) (string, error)```
+- Instance: ```DescribeInstances(tags map[string]string) ([]Description, error)```
+- Flavor: ```Prepare(flavorProperties json.RawMessage, spec instance.Spec, allocation types.AllocationMethod) (instance.Spec, error)```
+- Instance: ```Provision(spec Spec) (*ID, error)```
+
+---
+- Instance: ```DescribeInstances(tags map[string]string) ([]Description, error)```
+- Flavor: ```Healthy(flavorProperties json.RawMessage, inst instance.Description) (Health, error)```
+- Instance: ```DescribeInstances(tags map[string]string) ([]Description, error)```
+- Flavor: ```Healthy(flavorProperties json.RawMessage, inst instance.Description) (Health, error)```
+- ...
+
+---
+
 ## infrakit plugin list
 
 
@@ -223,4 +239,10 @@ $./infrakit group commit ./hello-dind.json
 
 
 - https://github.com/anarcher/infrakit.gcp
+
+## Design Goals
+
+![](https://github.com/docker/infrakit/raw/master/docs/images/arch.png)
+
+
 
