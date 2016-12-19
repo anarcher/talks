@@ -245,4 +245,13 @@ $./infrakit group commit ./hello-dind.json
 ![](https://github.com/docker/infrakit/raw/master/docs/images/arch.png)
 
 
+## Disadvantages of infrakit (present)
+
+## What points of Infrakit needs improvment?
+
+- ~~Large-scale instances (Cloud provider API Rate limit)~~
+- Using Autoscaling API with infrakit
+- `infrakit logs & state & events`
+- CommitID 
+- Eternal failure attempt = Mad Self-healing?
 
